@@ -11,13 +11,12 @@ def build_token_to_id_vocab(sentences, specials=('<pad>', '<bos>', '<eos>', '<un
     vocab = {}
     for tok in specials:          # ids 0..len(specials)-1, in given order
         vocab[tok] = len(vocab)
-    counter = 4
     for sentence in sentences:
         words = sentence.split()
         for word in words:
             if word not in vocab:
-                vocab[word] = counter
-                counter += 1
+                vocab[word] = len(vocab)
+
     return vocab
 
 # Step 2 - build_id_to_token_vocab
@@ -52,7 +51,6 @@ import torch
 
 def stack_padded_sequences_to_batch(padded_sequences):
     """Stack a list of equal-length padded id sequences into a 2D LongTensor batch."""
-    # TODO: stack padded id sequences into a (B, L) torch.long tensor
     return torch.tensor(padded_sequences, dtype=torch.long)
 
 # Step 7 - scale_embeddings_by_sqrt_d_model (not yet solved)
