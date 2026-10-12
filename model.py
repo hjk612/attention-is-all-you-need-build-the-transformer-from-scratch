@@ -120,8 +120,14 @@ def build_padding_mask(token_ids, pad_id):
     padding_mask = token_ids != pad_id
     return padding_mask.unsqueeze(1).unsqueeze(1)
 
-# Step 15 - build_causal_mask (not yet solved)
-# TODO: implement
+# Step 15 - build_causal_mask
+import torch
+
+def build_causal_mask(seq_len):
+    """Return a (1, 1, seq_len, seq_len) bool mask, True on and below diagonal."""
+    ones = torch.ones(seq_len, seq_len)
+    lower_tri = torch.tril(ones).bool()
+    return lower_tri.reshape(1, 1, seq_len, seq_len)
 
 # Step 16 - combine_padding_and_causal_masks (not yet solved)
 # TODO: implement
